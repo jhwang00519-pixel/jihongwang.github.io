@@ -137,7 +137,14 @@
     .meta-pill:hover { color: var(--vermillion); border-color: var(--vermillion); }
 
     /* Hero right: photo only */
-    .hero-right { display: flex; justify-content: center; align-items: flex-start; padding-top: 1rem; }
+    .hero-right {
+      --photo-drift-x: 0px;
+      --photo-drift-y: 0px;
+      display: flex; justify-content: center; align-items: flex-start; padding-top: 1rem;
+      transform: translate3d(var(--photo-drift-x), var(--photo-drift-y), 0);
+      transition: transform 4.8s cubic-bezier(.22,.61,.36,1);
+      will-change: transform;
+    }
     .hero-photo {
       position: relative;
       --photo-rotate-x: 0deg;
@@ -439,7 +446,7 @@
       footer { padding: 2rem 1.5rem; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .hero-photo, .hero-photo::before, .hero-photo img, .hero-photo-ring {
+      .hero-right, .hero-photo, .hero-photo::before, .hero-photo img, .hero-photo-ring {
         animation: none;
         transition: none;
       }
@@ -905,6 +912,7 @@
   let gaInitialized = false;
   let goatCounterInitialized = false;
   let photoPointerFrame = null;
+  let photoDriftTimer = null;
 
   /* ── SCROLL REVEAL ── */
   let _revealObs = null;
@@ -997,6 +1005,51 @@
     });
 
     resetPhoto();
+  }
+
+  function initHeroPhotoDrift() {
+    const heroRight = document.querySelector('.hero-right');
+    const photo = heroRight ? heroRight.querySelector('.hero-photo') : null;
+    if (!heroRight || !photo || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let isPaused = false;
+
+    function setDrift(x, y) {
+      heroRight.style.setProperty('--photo-drift-x', `${x.toFixed(2)}px`);
+      heroRight.style.setProperty('--photo-drift-y', `${y.toFixed(2)}px`);
+    }
+
+    function scheduleDrift(immediate) {
+      if (photoDriftTimer) clearTimeout(photoDriftTimer);
+      photoDriftTimer = window.setTimeout(() => {
+        if (isPaused) return;
+        const compact = window.innerWidth < 900;
+        const maxX = compact ? 10 : 22;
+        const maxY = compact ? 10 : 18;
+        const nextX = (Math.random() * 2 - 1) * maxX;
+        const nextY = (Math.random() * 2 - 1) * maxY;
+        setDrift(nextX, nextY);
+        scheduleDrift(false);
+      }, immediate ? 300 : 2600 + Math.random() * 1800);
+    }
+
+    photo.addEventListener('pointerenter', () => {
+      isPaused = true;
+      if (photoDriftTimer) clearTimeout(photoDriftTimer);
+      setDrift(0, 0);
+    });
+
+    photo.addEventListener('pointerleave', () => {
+      isPaused = false;
+      scheduleDrift(true);
+    });
+
+    window.addEventListener('resize', () => {
+      if (!isPaused) scheduleDrift(true);
+    });
+
+    setDrift(0, 0);
+    scheduleDrift(false);
   }
 
   /* ── ANALYTICS ── */
@@ -1141,6 +1194,7 @@
   initProgressBar();
   initBackToTop();
   initActiveNav();
+  initHeroPhotoDrift();
   initHeroPhotoParallax();
   initLanguageToggle();
   loadGoogleAnalytics();
