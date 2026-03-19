@@ -1024,8 +1024,8 @@
       photoDriftTimer = window.setTimeout(() => {
         if (isPaused) return;
         const compact = window.innerWidth < 900;
-        const maxX = compact ? 10 : 22;
-        const maxY = compact ? 10 : 18;
+        const maxX = compact ? 18 : 36;
+        const maxY = compact ? 16 : 28;
         const nextX = (Math.random() * 2 - 1) * maxX;
         const nextY = (Math.random() * 2 - 1) * maxY;
         setDrift(nextX, nextY);
