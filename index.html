@@ -252,6 +252,14 @@
     .footer-meta { font-size: .8rem; color: var(--ink-3); line-height: 1.8; }
     .footer-meta a { color: var(--vermillion); text-decoration: none; }
     .footer-meta a:hover { text-decoration: underline; }
+    .visit-counter {
+      margin-top: .85rem; display: inline-flex; align-items: center; gap: .55rem;
+      padding: .35rem .7rem; border: 1px solid var(--sand); background: var(--cream);
+      color: var(--ink-3); font-size: .76rem; letter-spacing: .04em;
+    }
+    .visit-counter strong {
+      color: var(--vermillion); font-weight: 500; font-variant-numeric: tabular-nums;
+    }
 
     /* ── FADE-IN ── */
     @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
@@ -780,6 +788,11 @@
   <div>
     <div class="footer-name">Jihong Wang</div>
     <div class="footer-meta" style="margin-top:.5rem;"><span data-lang="en">School of Mathematics and Statistics · Huazhong University of Science and Technology</span><span data-lang="zh">华中科技大学数学与统计学院</span></div>
+    <div class="visit-counter" id="visit-counter" aria-live="polite">
+      <span data-lang="en">Visits</span>
+      <span data-lang="zh">访问量</span>
+      <strong id="visit-counter-value">...</strong>
+    </div>
   </div>
   <div class="footer-meta" style="text-align:right;">
     <a href="mailto:jhwang00519@hust.edu.cn">jhwang00519@hust.edu.cn</a><br>
@@ -794,7 +807,9 @@
 <script>
   const LANG_STORAGE_KEY = 'site-language';
   const GA_MEASUREMENT_ID = 'G-WQ4FS5DNS0';
+  const GOATCOUNTER_ENDPOINT = 'https://jhwang.goatcounter.com/count';
   let gaInitialized = false;
+  let goatCounterInitialized = false;
 
   /* ── SCROLL REVEAL ── */
   let _revealObs = null;
@@ -870,6 +885,39 @@
     script.async = true;
     script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
     document.head.appendChild(script);
+  }
+
+  function renderGoatCounterValue(value) {
+    const target = document.getElementById('visit-counter-value');
+    if (!target) return;
+    target.textContent = value || '0';
+  }
+
+  function fetchGoatCounterTotal() {
+    fetch('https://jhwang.goatcounter.com/counter/TOTAL.json?no_branding=1')
+      .then(response => {
+        if (!response.ok) throw new Error('Failed to load GoatCounter total');
+        return response.json();
+      })
+      .then(data => {
+        renderGoatCounterValue(data.count || '0');
+      })
+      .catch(() => {
+        renderGoatCounterValue('--');
+      });
+  }
+
+  function loadGoatCounter() {
+    if (goatCounterInitialized) return;
+    goatCounterInitialized = true;
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.dataset.goatcounter = GOATCOUNTER_ENDPOINT;
+    script.src = '//gc.zgo.at/count.js';
+    script.addEventListener('load', fetchGoatCounterTotal);
+    script.addEventListener('error', () => renderGoatCounterValue('--'));
+    document.body.appendChild(script);
   }
 
   /* ── LANGUAGE ── */
@@ -967,6 +1015,7 @@
   initActiveNav();
   initLanguageToggle();
   loadGoogleAnalytics();
+  loadGoatCounter();
 </script>
 
 <!-- ─── BACK TO TOP ─── -->
