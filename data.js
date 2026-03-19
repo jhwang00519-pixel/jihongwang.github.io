@@ -8,7 +8,8 @@
 //      venue:    "期刊/会议名称",
 //      type:     "journal",   // "journal"（已发表）或 "preprint"（预印本）
 //      year:     2026,
-//      doi:      "10.xxxx/..."  // 可选
+//      doi:      "10.xxxx/...", // 可选
+//      url:      "https://..."   // 可选，论文标题链接
 //    }
 //
 //  如何添加新学术活动：在 TALKS 数组开头新增：
@@ -30,7 +31,7 @@ const PUBLICATIONS = [
     venue: "Comput. Methods Appl. Mech. Eng.",
     type: "journal",
     year: 2026,
-    doi: ""
+    doi: "10.1016/j.cma.2026.118792"
   },
   {
     title: "A physics-guided smoothing method for material modeling with digital image correlation (DIC) measurements",
@@ -38,7 +39,7 @@ const PUBLICATIONS = [
     venue: "IEEE Int. Conf. Image Process. (ICIP)",
     type: "conference",
     year: 2025,
-    doi: ""
+    doi: "10.1109/icip55913.2025.11084372"
   },
   {
     title: "Asymptotic compatibility of the approximate-ball finite element method for 2D nonlocal Poisson problem with Neumann boundary conditions",
@@ -46,7 +47,8 @@ const PUBLICATIONS = [
     venue: "arXiv:2512.00426",
     type: "preprint",
     year: 2025,
-    doi: ""
+    doi: "",
+    url: "https://arxiv.org/abs/2512.00426"
   },
   {
     title: "Data generation-based operator learning for solving partial differential equations on unbounded domains",
@@ -54,7 +56,7 @@ const PUBLICATIONS = [
     venue: "Commun. Comput. Phys.",
     type: "journal",
     year: 2025,
-    doi: ""
+    doi: "10.4208/cicp.oa-2023-0327"
   },
   {
     title: "Numerical simulation of the two-dimensional fractional Schrödinger equation for describing the quantum dynamics on a comb with the absorbing boundary conditions",
@@ -62,7 +64,7 @@ const PUBLICATIONS = [
     venue: "Commun. Nonlinear Sci. Numer. Simul.",
     type: "journal",
     year: 2025,
-    doi: ""
+    doi: "10.1016/j.cnsns.2024.108407"
   },
   {
     title: "A stable and high-order numerical scheme with discrete DtN-type artificial boundary conditions for a 2D peridynamic diffusion model",
@@ -70,7 +72,7 @@ const PUBLICATIONS = [
     venue: "Comput. Math. Appl.",
     type: "journal",
     year: 2024,
-    doi: ""
+    doi: "10.1016/j.camwa.2024.01.006"
   },
   {
     title: "Numerical solution of convected wave equation in free field using artificial boundary method",
@@ -78,7 +80,7 @@ const PUBLICATIONS = [
     venue: "Numer. Methods Partial Differ. Equ.",
     type: "journal",
     year: 2024,
-    doi: ""
+    doi: "10.1002/num.23131"
   },
   {
     title: "Construction of the absorbing boundary condition for the flow of Oldroyd-B fluid over a semi-infinite plate with magnetic effect",
@@ -86,7 +88,7 @@ const PUBLICATIONS = [
     venue: "Phys. Fluids",
     type: "journal",
     year: 2024,
-    doi: ""
+    doi: "10.1063/5.0199911"
   },
   {
     title: "Stability and convergence analysis of high-order numerical schemes with DtN-type absorbing boundary conditions for nonlocal wave equations",
@@ -94,7 +96,7 @@ const PUBLICATIONS = [
     venue: "IMA J. Numer. Anal.",
     type: "journal",
     year: 2024,
-    doi: ""
+    doi: "10.1093/imanum/drad016"
   },
   {
     title: "Analysis of the anomalous diffusion in comb structure with absorbing boundary conditions",
@@ -102,7 +104,7 @@ const PUBLICATIONS = [
     venue: "J. Comput. Phys.",
     type: "journal",
     year: 2023,
-    doi: ""
+    doi: "10.1016/j.jcp.2023.112315"
   },
   {
     title: "Implicit bias in understanding deep learning for solving PDEs beyond Ritz-Galerkin method",
@@ -110,7 +112,7 @@ const PUBLICATIONS = [
     venue: "CSIAM Trans. Appl. Math.",
     type: "journal",
     year: 2022,
-    doi: ""
+    doi: "10.4208/csiam-am.so-2020-0006"
   },
   {
     title: "Stability and error analysis for a second-order approximation of the 1D nonlocal Schrödinger equation under DtN-type boundary conditions",
@@ -118,7 +120,7 @@ const PUBLICATIONS = [
     venue: "Math. Comp.",
     type: "journal",
     year: 2022,
-    doi: ""
+    doi: "10.1090/mcom/3685"
   }
 ];
 
